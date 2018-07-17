@@ -5,6 +5,7 @@ import os
 import sys
 import threading
 import time
+import datetime
 
 # sys.path.append(os.path.join(sys.path[0], '../../'))
 import schedule
@@ -101,11 +102,20 @@ schedule.every(2).to(4).days.at("10:50").do(run_threaded, block_bots)
 schedule.every(2).to(3).days.at("07:45").do(run_threaded, unfollow_non_followers)	
 schedule.every(1).to(3).hours.do(run_threaded, like_timeline)	
 
-schedule.every().day.at("07:00").do(run_threaded, morning_hashtag)
+schedule.every().day.at("07:01").do(run_threaded, morning_hashtag)
 schedule.every().day.at("13:00").do(run_threaded, noon_hashtag)
 schedule.every().day.at("17:00").do(run_threaded, apero_hashtag)
 schedule.every().day.at("22:00").do(run_threaded, nigth_hashtag)
 
 while True:
-    schedule.run_pending()
-    time.sleep(schedule.idle_seconds)
+	current_time = datetime.datetime.now()
+	start_day = datetime.datetime(hour=7, minute=0, second=0, year=current_time.year, month=current_time.month, day=current_time.day)
+	end_day = datetime.datetime(hour=23, minute=59, second=59, microsecond=999999, year=current_time.year, month=current_time.month, day=current_time.day)
+	
+	if start_day < current_time < end_day:
+		schedule.run_pending()
+		time.sleep(schedule.idle_seconds)
+	else:
+		newstart = start_day + datetime.timedelta(days=1)
+		time.sleep(int((newstart-current_time).total_seconds()))
+    
