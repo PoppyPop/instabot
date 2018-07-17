@@ -6,6 +6,7 @@ import sys
 import threading
 import time
 import datetime
+import functools
 
 # sys.path.append(os.path.join(sys.path[0], '../../'))
 import schedule
@@ -15,29 +16,29 @@ from random import randint
 import config
 
 bot = Bot(max_likes_per_day=config.MAX_LIKES_PER_DAY,
-            max_unlikes_per_day=config.MAX_UNLIKES_PER_DAY,
-            max_follows_per_day=config.MAX_FOLLOWS_PER_DAY,
-            max_unfollows_per_day=config.MAX_UNFOLLOWS_PER_DAY,
-            min_followers_to_follow=config.MIN_FOLLOWERS_TO_FOLLOW,
+			max_unlikes_per_day=config.MAX_UNLIKES_PER_DAY,
+			max_follows_per_day=config.MAX_FOLLOWS_PER_DAY,
+			max_unfollows_per_day=config.MAX_UNFOLLOWS_PER_DAY,
+			min_followers_to_follow=config.MIN_FOLLOWERS_TO_FOLLOW,
 			min_media_count_to_follow=config.MIN_MEDIA_COUNT_TO_FOLLOW,
-            max_following_to_block=config.MAX_FOLLOWING_TO_BLOCK)
-bot.login()
+			max_following_to_block=config.MAX_FOLLOWING_TO_BLOCK)
+bot.login(username=config.USERNAME)
 bot.logger.info("Herba account 24/7!")
 
 # This decorator can be applied to
 def with_wait(func):
-    @functools.wraps(func)
-    def wrapper(*args, **kwargs):
+	@functools.wraps(func)
+	def wrapper(*args, **kwargs):
 		# Random wait of 0-120 minutes
 		rndWait = randint(0, 120)
 		bot.logger.info(func.__name__ + " in " + str(rndWait) + " minutes.")
-        time.sleep(rndWait*60)
-        result = func(*args, **kwargs)
-        return result
-    return wrapper
+		time.sleep(rndWait*60)
+		result = func(*args, **kwargs)
+		return result
+	return wrapper
 	
 def likeNFollow_hashtag(hashtags, amount=3):
-    medias = bot.get_total_hashtag_media(hashtags, amount, true)
+	medias = bot.get_total_hashtag_media(hashtags, amount, true)
 	bot.like_medias(medias)
 	
 	for media in medias:
@@ -52,11 +53,11 @@ def like_timeline():
 	maxRoundLike = maxLike // 17
 	bot.logger.info("Max timeline like: " + str(maxLike))
 	bot.logger.info("Max timeline round like: " + str(maxRoundLike))
-    bot.like_timeline(amount=maxRoundLike)
+	bot.like_timeline(amount=maxRoundLike)
 
 @with_wait
 def unfollow_non_followers():
-    bot.unfollow_non_followers()
+	bot.unfollow_non_followers()
 
 @with_wait
 def block_bots():
@@ -67,35 +68,36 @@ def morning_hashtag():
 	random_hashtag_file = bot.read_list_from_file(config.HASHTAGS_07H)
 	random_hashtag_file = random_hashtag_file[:config.NB_HASHTAGS_07H]
 	
-	likeNFollow_hashtag(random_hashtag_file, config.NB_HASHTAGS_LIKENFOL_07H
+	likeNFollow_hashtag(random_hashtag_file, config.NB_HASHTAGS_LIKENFOL_07H)
 		
 @with_wait
 def noon_hashtag():
 	random_hashtag_file = bot.read_list_from_file(config.HASHTAGS_13H)
 	random_hashtag_file = random_hashtag_file[:config.NB_HASHTAGS_13H]
 	
-	likeNFollow_hashtag(random_hashtag_file, config.NB_HASHTAGS_LIKENFOL_13H
+	likeNFollow_hashtag(random_hashtag_file, config.NB_HASHTAGS_LIKENFOL_13H)
 		
 @with_wait
 def apero_hashtag():
 	random_hashtag_file = bot.read_list_from_file(config.HASHTAGS_17H)
 	random_hashtag_file = random_hashtag_file[:config.NB_HASHTAGS_17H]
 	
-	likeNFollow_hashtag(random_hashtag_file, config.NB_HASHTAGS_LIKENFOL_17H
+	likeNFollow_hashtag(random_hashtag_file, config.NB_HASHTAGS_LIKENFOL_17H)
 		
 @with_wait
 def nigth_hashtag():
 	random_hashtag_file = bot.read_list_from_file(config.HASHTAGS_22H)
 	random_hashtag_file = random_hashtag_file[:config.NB_HASHTAGS_22H]
 	
-	likeNFollow_hashtag(random_hashtag_file, config.NB_HASHTAGS_LIKENFOL_22H
+	likeNFollow_hashtag(random_hashtag_file, config.NB_HASHTAGS_LIKENFOL_22H)
 				
 def stats():
-    bot.save_user_stats(bot.user_id)
+	bot.logger.info("Saving stats")
+	bot.save_user_stats(bot.user_id)
 
 def run_threaded(job_fn):
-    job_thread = threading.Thread(target=job_fn)
-    job_thread.start()	
+	job_thread = threading.Thread(target=job_fn)
+	job_thread.start()	
 	
 schedule.every(1).hours.do(run_threaded, stats)	
 schedule.every(2).to(4).days.at("10:50").do(run_threaded, block_bots)	
@@ -114,8 +116,12 @@ while True:
 	
 	if start_day < current_time < end_day:
 		schedule.run_pending()
-		time.sleep(schedule.idle_seconds)
+		waittime = schedule.idle_seconds()
+		bot.logger.info("Waiting for: " + str(waittime))
+		time.sleep(waittime)
 	else:
 		newstart = start_day + datetime.timedelta(days=1)
-		time.sleep(int((newstart-current_time).total_seconds()))
-    
+		waittime = (newstart-current_time).total_seconds()
+		bot.logger.info("Waiting tomorrow for: " + str(waittime))
+		time.sleep(waittime)
+	

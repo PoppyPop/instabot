@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+USERNAME = "skytepbeta"
+
 MAX_LIKES_PER_DAY = 200
 MAX_UNLIKES_PER_DAY = 200
 MAX_FOLLOWS_PER_DAY = 70

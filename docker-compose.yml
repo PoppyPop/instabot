@@ -3,7 +3,7 @@ version: '3'
 services:
   instabot-herba:
     image: poppypop/docker-instabot
-    command: herba.py
+    command: python /app/herba.py
     environment:
       - TZ=Europe/Paris
     volumes:
