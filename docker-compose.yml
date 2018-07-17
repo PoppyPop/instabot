@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  instabot-herba:
+    image: poppypop/docker-instabot
+    command: herba.py
+    volumes:
+      - insta-config:/app
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "7"
+
+volumes:
+  insta-config:
+    external: true
+    
+networks:
+  default:
+    driver_opts:
+      com.docker.network.driver.mtu: 9000
