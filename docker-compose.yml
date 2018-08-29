@@ -2,7 +2,7 @@ version: '3'
 
 services:
   instabot-herba:
-    image: poppypop/docker-instabot
+    image: poppypop/docker-instabot:0.0-git
     command: python /app/herba.py
     environment:
       - TZ=Europe/Paris
@@ -13,9 +13,24 @@ services:
       options:
         max-size: "50m"
         max-file: "7"
+      
+  instabot-herba:
+    image: poppypop/docker-instabot:0.0-git
+    command: python /app/cookies.py
+    environment:
+      - TZ=Europe/Paris
+    volumes:
+      - insta-cookies:/app
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "7"
 
 volumes:
   insta-config:
+    external: true
+  insta-cookies:
     external: true
     
 networks:

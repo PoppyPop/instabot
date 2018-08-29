@@ -119,20 +119,20 @@ def run_threaded(job_fn):
 	job_thread.start()	
 	
 schedule.every(1).hours.do(run_threaded, stats)	
-schedule.every(2).to(4).days.at("10:50").do(run_threaded, block_bots)	
-schedule.every(2).to(3).days.at("07:45").do(run_threaded, unfollow_non_followers)	
+schedule.every(2).to(4).days.at("10:20").do(run_threaded, block_bots)	
+schedule.every(2).to(3).days.at("07:15").do(run_threaded, unfollow_non_followers)	
 schedule.every(1).to(3).hours.do(run_threaded, like_timeline)	
 
 
-schedule.every().day.at("07:01").do(run_threaded, likeNFollow_media_likers)
-schedule.every().day.at("13:00").do(run_threaded, likeNFollow_media_likers)
-schedule.every().day.at("17:00").do(run_threaded, likeNFollow_media_likers)
-schedule.every().day.at("22:00").do(run_threaded, likeNFollow_media_likers)
+schedule.every().day.at("07:21").do(run_threaded, likeNFollow_media_likers)
+schedule.every().day.at("13:50").do(run_threaded, likeNFollow_media_likers)
+schedule.every().day.at("17:10").do(run_threaded, likeNFollow_media_likers)
+schedule.every().day.at("21:20").do(run_threaded, likeNFollow_media_likers)
 
-#schedule.every().day.at("07:01").do(run_threaded, morning_hashtag)
-#schedule.every().day.at("13:00").do(run_threaded, noon_hashtag)
-#schedule.every().day.at("17:00").do(run_threaded, apero_hashtag)
-#schedule.every().day.at("22:00").do(run_threaded, nigth_hashtag)
+schedule.every().day.at("08:01").do(run_threaded, morning_hashtag)
+schedule.every().day.at("12:00").do(run_threaded, noon_hashtag)
+schedule.every().day.at("16:00").do(run_threaded, apero_hashtag)
+schedule.every().day.at("20:00").do(run_threaded, nigth_hashtag)
 
 while True:
 	current_time = datetime.datetime.now()

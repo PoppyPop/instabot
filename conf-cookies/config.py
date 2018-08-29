@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-USERNAME = "steve.mymy.h24@gmail.com"
+USERNAME = "myriam.tho@gmail.com"
 
 MAX_LIKES_PER_DAY = 200
 MAX_UNLIKES_PER_DAY = 200
