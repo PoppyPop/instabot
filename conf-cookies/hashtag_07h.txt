@@ -1,8 +1,6 @@
 photoshop
-coffee
-cafe
+strasbourg
 animal
-breakfast
 sunnyday
 characterdesign
 sun
@@ -20,7 +18,6 @@ fantasy
 conceptart
 painting
 alsace
-strasbourg
 instaart
 artist
 animation

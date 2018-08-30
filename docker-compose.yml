@@ -7,14 +7,14 @@ services:
     environment:
       - TZ=Europe/Paris
     volumes:
-      - insta-config:/app
+      - insta-herba:/app
     logging:
       driver: json-file
       options:
         max-size: "50m"
         max-file: "7"
       
-  instabot-herba:
+  instabot-cookies:
     image: poppypop/docker-instabot:0.0-git
     command: python /app/cookies.py
     environment:
@@ -28,7 +28,7 @@ services:
         max-file: "7"
 
 volumes:
-  insta-config:
+  insta-herba:
     external: true
   insta-cookies:
     external: true

@@ -2,7 +2,7 @@
 #
 
 
-docker run -it --rm -v insta-config:/volume -v ${PWD}:/orig alpine \
+docker run -it --rm -v insta-herba:/volume -v ${PWD}:/orig alpine \
     sh -c "cp -fa /orig/conf/* /volume/"
 
 
