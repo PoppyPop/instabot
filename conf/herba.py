@@ -28,6 +28,66 @@ bot = Bot(max_likes_per_day=config.MAX_LIKES_PER_DAY,
 bot.login(username=config.USERNAME)
 bot.logger.info("Herba account 24/7!")
 
+# ==== Startup specials ====
+
+# ==== Convert from friends to whitelist ids in a proper way ====
+if not os.path.isfile("whitelist_cached.txt"):
+	open("whitelist_cached.txt", 'a').close()
+
+whitelist = []
+reject = []
+whitelist_cache = {}
+with open("whitelist_cached.txt", "r") as f:
+	for line in f:
+		(key, val) = line.rstrip().split("|")
+		whitelist_cache[key] = val
+		
+whitelist_to_del = []		
+for id, value in whitelist_cache.items():
+	if value == "None":
+		whitelist_to_del.append(id)
+
+for to_del in whitelist_to_del:		
+	del whitelist_cache[to_del]
+	 
+friends = bot.read_list_from_file("friends.txt")
+for friend in tqdm(friends):
+	if friend not in whitelist_cache:
+		user_id = bot.get_user_id_from_username(friend)
+		if user_id is not None:
+			whitelist_cache[friend] = user_id
+		else:
+			reject.append(friend)
+		bot.small_delay()
+	
+	# in all case append to whitelist
+	if friend in whitelist_cache:
+		whitelist.append(whitelist_cache[friend])
+
+# Write cache
+with open('whitelist_cached.txt', 'w') as file:  # rewrite file
+	for id, value in whitelist_cache.items():
+		file.write(id + "|" + str(value) + "\n")
+		
+with open('whitelist.txt', 'w') as file:  # rewrite file
+	for value in whitelist:
+		file.write(value + "\n")
+		
+with open('reject.txt', 'w') as file:  # reject file
+	for value in reject:
+		file.write(value + "\n")
+		
+		
+# ==== Unban and follow whitelist ====
+
+#users_to_follow = bot.whitelist
+#print("Found %d users in file." % len(users_to_follow))
+#bot.unblock_users(users_to_follow)
+#empty = bot.following
+#bot.follow_users(users_to_follow)
+
+#exit(18)
+
 def signal_handler(sig, frame):
 	bot.logout()
 	sys.exit(0)
