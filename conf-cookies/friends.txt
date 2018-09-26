@@ -26,7 +26,6 @@ pyrika
 aaron_randy_
 gregouille67
 matt_soffe
-jaredleto
 childrenswritersguild
 frenchiesdesign
 clairette_83
@@ -39,7 +38,6 @@ melanie.rossi
 benjamin_kuehnemund
 nicolassimoes
 julhein
-chrishemsworth
 lukas_hof
 janis_danner
 laeti_lyly
@@ -128,3 +126,4 @@ darkbladeangel
 hyamei
 barth_67
 loulinelacroute
+kenbek
