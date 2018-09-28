@@ -76,9 +76,11 @@ with open('whitelist.txt', 'w') as file:  # rewrite file
 with open('reject.txt', 'w') as file:  # reject file
 	for value in reject:
 		file.write(value + "\n")
-		
-		
+			
 # ==== Unban and follow whitelist ====
+users_to_follow = bot.whitelist
+your_following = bot.following
+rest_users = list(set(users_to_follow) - set(your_following))
 print("Found %d users to unban and follow in file." % len(rest_users))
 bot.unblock_users(rest_users)
 bot.follow_users(rest_users)
