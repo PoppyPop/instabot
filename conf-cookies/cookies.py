@@ -79,13 +79,9 @@ with open('reject.txt', 'w') as file:  # reject file
 		
 		
 # ==== Unban and follow whitelist ====
-#users_to_follow = bot.whitelist
-#your_following = bot.following
-#rest_users = list(set(users_to_follow) - set(your_following))
-#print("Found %d users in file." % len(rest_users))
-#bot.follow_users(rest_users)
-
-#exit(18)
+print("Found %d users to unban and follow in file." % len(rest_users))
+bot.unblock_users(rest_users)
+bot.follow_users(rest_users)
 
 def signal_handler(sig, frame):
 	bot.logout()
