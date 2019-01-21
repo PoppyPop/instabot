@@ -1,8 +1,6 @@
 chipspower
-darshan_sompura_illustrations
 kevin_pabel
 emilie.h24
-tbr_bastien
 nico_jam
 konstantin_timm
 greg.h24
@@ -39,7 +37,6 @@ benjamin_kuehnemund
 nicolassimoes
 julhein
 lukas_hof
-janis_danner
 laeti_lyly
 hittheroad.co
 elioliart
@@ -78,13 +75,11 @@ nozomind
 ryoji_yamaki
 henrycavill
 eveskylar
-mood.la.vie.est.belle
 gabriel.soareszz
 gg.gopgap
 steve.mymy.h24
 marie.huchet
 jisays
-jd.moha
 characterdesignchallenge
 jonathanmerey
 julie_aka_jool
@@ -115,7 +110,6 @@ tieums1
 cyril.gllr
 damutse
 reneaujeremie
-spacyspice
 xklaad
 carrieonart
 charlie.roxx
@@ -125,5 +119,5 @@ darkbladeangel
 hyamei
 barth_67
 loulinelacroute
-kenbek
 armandrosalie
+jerome_humbert
